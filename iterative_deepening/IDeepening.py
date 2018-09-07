@@ -1,5 +1,6 @@
 from puzzle import Puzzle
 from os import system, name
+import time
 
 # class Tree:
 #     def __init__(self, content, left=None, right=None):
@@ -60,6 +61,7 @@ class IterativeDeepening:
         return False, None
 
     def idfs(self, max_depth=50):
+        start_time = time.time()
         for i in range(max_depth):
             print("Limit =", i)
             state_list = []
@@ -67,6 +69,7 @@ class IterativeDeepening:
             isFinal, source = self.dfs(self.puzzle, self.puzzle.target_state, i, state_list)
             if isFinal == True:
                 return i, source
+            print("Ellapsed time = %s seconds" %(time.time() - start_time))
         return max_depth, None
 
 if __name__ == "__main__":

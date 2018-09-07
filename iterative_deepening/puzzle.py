@@ -38,10 +38,10 @@ class Puzzle:
         #  Stores the location of blank tile
         self.blank = tuple([x[0] for x in np.where(self.puzzle == 0)])
         self.target_state = self._calc_state()
-        self.shuffle(100)
+        self.shuffle(10)
     
     def _calc_state(self):
-        return "".join([str(i) for i in self.puzzle.ravel()])
+        return " ".join([str(i) for i in self.puzzle.ravel()])
 
     def shuffle(self, times):
         possible_moves = [self.UP, self.LEFT, self.DOWN, self.RIGHT]
@@ -52,7 +52,6 @@ class Puzzle:
         return self.size * cell[0] + cell[1]
 
     def move(self, direction):
-        blank_old = self.blank
         isPossible = False
         if direction == self.DOWN:
             if self.blank[0] != 0:
