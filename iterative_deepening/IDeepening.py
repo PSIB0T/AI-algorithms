@@ -1,4 +1,5 @@
 from puzzle import Puzzle
+from os import system, name
 
 # class Tree:
 #     def __init__(self, content, left=None, right=None):
@@ -32,19 +33,24 @@ from puzzle import Puzzle
 
 # print(dfs(tree, 23))
 
+def clear(command):
+    system(command)
+
 class IterativeDeepening:
-    def __init__(self, puzzle):
+    def __init__(self, puzzle, command="clear"):
         self.puzzle = puzzle
+        self.command = command
         print(self.puzzle.state)
 
     def dfs(self, src, target, limit, state_list):
-        print("New state")
-        print(src.puzzle)
+        # print("New state")
+        # clear(self.command)
+        # print(src.puzzle)
         if src.state == target:
             return True, src
         if limit <= 0:
             return False, None   
-        print(state_list)
+        # print(state_list)
         for move in src.get_moves():
             if move.state not in state_list:
                 state_list.append(move.state)
@@ -53,7 +59,7 @@ class IterativeDeepening:
                     return True, source
         return False, None
 
-    def idfs(self, max_depth=20):
+    def idfs(self, max_depth=50):
         for i in range(max_depth):
             print("Limit =", i)
             state_list = []
@@ -63,14 +69,22 @@ class IterativeDeepening:
                 return i, source
         return max_depth, None
 
-puzzle = Puzzle(2)
-print(puzzle.puzzle)
-print("Target state is ", puzzle.target_state)
-id = IterativeDeepening(puzzle)
+if __name__ == "__main__":
 
-depth, source = id.idfs()
-print("Depth is", depth)
-if source != None:
-    print(source.puzzle)
-else:
-    print("No solution found")
+    if name == "nt":
+        command = "cls"
+    else:
+        command = "clear"
+    
+    puzzle = Puzzle(4)
+    print(puzzle.puzzle)
+    print("Target state is ", puzzle.target_state)
+    id = IterativeDeepening(puzzle, command)
+
+    depth, source = id.idfs()
+    print("Depth is", depth)
+    if source != None:
+        print(source.puzzle)
+    else:
+        print("No solution found")
+

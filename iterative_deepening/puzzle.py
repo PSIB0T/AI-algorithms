@@ -1,4 +1,5 @@
 import numpy as np
+import random
 import copy
 
 class Puzzle:
@@ -32,15 +33,20 @@ class Puzzle:
     def _generate_puzzle(self):
         self.state = 0
         self.puzzle = np.arange(self.size * self.size)
-        np.random.shuffle(self.puzzle)
+        # np.random.shuffle(self.puzzle)
         self.puzzle = self.puzzle.reshape(self.size, self.size)
         #  Stores the location of blank tile
         self.blank = tuple([x[0] for x in np.where(self.puzzle == 0)])
-        self.state = self._calc_state()
-        self.target_state = " ".join([str(i) for i in range(self.size ** 2)])
+        self.target_state = self._calc_state()
+        self.shuffle(100)
     
     def _calc_state(self):
-        return " ".join([str(i) for i in self.puzzle.ravel()])
+        return "".join([str(i) for i in self.puzzle.ravel()])
+
+    def shuffle(self, times):
+        possible_moves = [self.UP, self.LEFT, self.DOWN, self.RIGHT]
+        for i in range(times):
+            self.move(random.choice(possible_moves))
     
     def _abs_cell_number(self, cell):
         return self.size * cell[0] + cell[1]
