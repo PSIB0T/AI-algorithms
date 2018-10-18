@@ -18,16 +18,30 @@ class Puzzle:
         self.target_state = 0
         self._generate_puzzle()
 
+    @staticmethod
+    def move_no_to_name(move):
+        if move == Puzzle.UP:
+            return "UP"
+        if move == Puzzle.DOWN:
+            return "DOWN"
+        if move == Puzzle.LEFT:
+            return "LEFT"
+        if move == Puzzle.RIGHT:
+            return "RIGHT"
+        
+
     def get_moves(self):
         # All legal moves in the puzzle
         possible_moves = [self.UP, self.LEFT, self.DOWN, self.RIGHT]
         # Moves that can be made in the current situation
         right_moves = []
+        move_names = []
         for move in possible_moves:
             if self.move(move):
                 right_moves.append(copy.deepcopy(self))
+                move_names.append(move)
                 self.move((move + 2) % 4)
-        return right_moves
+        return right_moves, move_names
     
     # Generates size X size puzzle
     def _generate_puzzle(self):
@@ -38,7 +52,7 @@ class Puzzle:
         #  Stores the location of blank tile
         self.blank = tuple([x[0] for x in np.where(self.puzzle == 0)])
         self.target_state = self._calc_state()
-        self.shuffle(10)
+        self.shuffle(50)
     
     def _calc_state(self):
         return " ".join([str(i) for i in self.puzzle.ravel()])
