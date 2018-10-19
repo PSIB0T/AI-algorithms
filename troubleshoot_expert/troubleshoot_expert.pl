@@ -57,6 +57,10 @@ troubleshoot(contact_isp) :-
   internet_path_1(yes),
   internet_path_2(modem_not_setup).
 
+troubleshoot(turn_on_modem) :-
+  what(net_not_working),
+  internet_path_1(no),
+
 troubleshoot(plugin_modem) :-
   what(net_not_working),
   internet_path_1(yes),
@@ -66,6 +70,10 @@ troubleshoot(power_on_sol) :-
   what(pc_not_starting),
   pc_not_starting_path_1(yes),
   pc_not_starting_path_2(power_on).
+
+troubleshoot(pc_not_plugged_in) :-
+  what(pc_not_starting),
+  pc_not_starting_path_1(no).
 
 troubleshoot(reboot_sol) :-
   what(pc_not_starting),
@@ -193,8 +201,11 @@ describe(load_reboot_sol) :-
   write('Solution for part 3'), nl,
   write('...'), nl.
 
+describe(turn_on_modem) :-
+  write('Please restart your modem and try again'), nl.
 
-
+describe(pc_not_plugged_in) :-
+  write('Please plugin your PC.'), nl.
 
 % Assigns an answer to questions from the knowledge base
 slow_pc_path_1(Answer) :-
